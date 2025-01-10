@@ -31,7 +31,6 @@ interface Client {
   birthDate: string | Date;
 }
 
-// Função para formatar CPF
 function formatCPF(cpf: string): string {
   return cpf
     .replace(/\D/g, "")
@@ -40,7 +39,6 @@ function formatCPF(cpf: string): string {
     .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
 }
 
-// Função para formatar telefone
 function formatPhone(phone: string): string {
   return phone
     .replace(/\D/g, "")
@@ -57,14 +55,12 @@ export default function Page() {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    // Obter a função do usuário (simulação de autenticação)
-    const userRole = localStorage.getItem("userRole"); // Exemplo: "ADMIN" ou "SELLER"
+    const userRole = localStorage.getItem("userRole");
     setIsAdmin(userRole === "ADMIN");
 
     async function fetchClients() {
       try {
         const result = await getClientsAction();
-        // Aplica formatação nos dados recebidos
         const formattedClients = result.map((client: Client) => ({
           ...client,
           cpf: formatCPF(client.cpf),
@@ -133,7 +129,7 @@ export default function Page() {
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
-        {isAdmin && <Button onClick={handlePush}>Adicionar Cliente</Button>}
+        <Button onClick={handlePush}>Adicionar Cliente</Button>
       </div>
       <div className="border rounded-2xl items-center">
         <Table>
